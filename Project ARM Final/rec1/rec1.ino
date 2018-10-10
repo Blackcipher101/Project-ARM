@@ -4,7 +4,7 @@ void setup()
 {
   Serial.begin(9600);
 vw_set_ptt_inverted(true); // Required for DR3100
-vw_set_rx_pin(12);
+vw_set_rx_pin(9);
 vw_setup(4000); // Bits per sec
 pinMode(13, OUTPUT);
 

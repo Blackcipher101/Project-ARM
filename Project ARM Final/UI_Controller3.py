@@ -30,12 +30,12 @@ class MainWindow(Gtk.Window):
 		self.rightAngleButton.connect("clicked", self.rightAngleButtonAction)
 
 		ad1 = Gtk.Adjustment(0, 0, 180, 5, 10, 0)
-		#ad2 = Gtk.Adjustment(0, 0, 180, 5, 10, 0)
+		ad2 = Gtk.Adjustment(0, 0, 180, 5, 10, 0)
 
-		#self.h_scale_2 = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL, adjustment = ad2)
-		#self.h_scale_2.set_digits(0)
-		#self.h_scale_2.set_hexpand(True)
-		#self.h_scale_2.connect("value-changed", self.scale_moved_2)
+		self.h_scale_2 = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL, adjustment = ad2)
+		self.h_scale_2.set_digits(0)
+		self.h_scale_2.set_hexpand(True)
+		self.h_scale_2.connect("value-changed", self.scale_moved_2)
 
 		self.h_scale = Gtk.Scale(orientation = Gtk.Orientation.HORIZONTAL, adjustment = ad1)
 		self.h_scale.set_digits(0)
@@ -44,9 +44,6 @@ class MainWindow(Gtk.Window):
 
 		self.label = Gtk.Label("Value: ")
 		self.label_2 = Gtk.Label("Value: ")	    
-
-		self.handButton = Gtk.Button(label = "hand")
-		self.handButton.connect("clicked", self.handButtonAction)
 
 		self.forwardButton = Gtk.Button(label = "^")
 		self.forwardButton.connect("clicked", self.forwardButtonAction)
@@ -78,7 +75,7 @@ class MainWindow(Gtk.Window):
 		grid.attach(self.label, 0, 180, 10, 10)
 
 		grid.attach(self.label_hand, 0, 210, 10, 10)
-		grid.attach(self.handButton, 0, 240, 10, 10)
+		grid.attach(self.h_scale_2, 0, 240, 10, 10)
 		grid.attach(self.label_2, 0, 270, 10, 10)
 		
 		grid.attach(self.forwardButton, 0, 330, 10, 10)
@@ -96,8 +93,12 @@ class MainWindow(Gtk.Window):
 		send = str(length-2)+'a'+str(int(self.h_scale.get_value()))
 		arduino.write(send)
 
-	def handButtonAction(self, widget):
-		arduino.write('1d1')
+	def scale_moved_2(self, event):
+		send = ""
+		length = len(str(self.h_scale.get_value()))
+		self.label_2.set_text("Value: " + str(self.h_scale_2.get_value()))
+		send = str(length - 2)+'d'+str(int(self.h_scale_2.get_value()))
+		arduino.write(send)
 
 	def forwardButtonAction(self, widget):
 		arduino.write('1e1')

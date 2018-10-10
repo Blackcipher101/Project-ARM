@@ -78,14 +78,6 @@ void loop()
       back();
       delay(20);
     }
-    else if(ser[1] == 'd')
-    {
-      Serial.println("open");
-      digitalWrite(13, 1);
-      delay(500);
-      digitalWrite(13, 0);
-      delay(20);
-    }
     else if(ser[i-1] >= '0' && ser[i-1] <= '9' && ser[1] >= 'a' && ser[1] <= 'f')
     {
       Serial.print("The message: ");
@@ -150,6 +142,21 @@ void loop()
         Serial.println(deg_fin);
         delay(100);
         motor3.write(1500);
+      }
+      else if(val == 'd')
+      {
+        deg = 0;
+        power = digi - 1;
+        for(i=2;power>=0;i++, power--)
+        {
+          store = (int)ser[i] - 48;
+          store = store*pow(10, power);
+          deg+=store;
+        }
+        deg = deg*(1500/180);
+        Serial.print("The sent val: ");
+        Serial.print(deg);
+        motor4_angle(deg);
       }
     }
     
