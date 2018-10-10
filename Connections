@@ -5,3 +5,16 @@ forward
 right_b 1
 left_b 1
 backward
+
+right_a to pin 8
+right_b to pin 7
+left_a to pin 6
+left_a to pin 5
+
+base servo 10
+second servo 3
+
+third servo 9
+hand servo 2
+
+receiver data 12
